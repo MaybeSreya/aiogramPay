@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/tailwind.css" rel="stylesheet">
+    <title>Payment Confirmation</title>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+
+    <div class="text-center">
+        <button id="payButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            I have paid
+        </button>
+        <div id="message" class="mt-4 text-gray-600"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+        document.getElementById('payButton').addEventListener('click', () => {
+            document.getElementById('message').textContent = "Moderator will check your payments!";
+            fetch('/send_payment_check', { method: 'POST' });
+        });
+        socket.on('update_message', function(data) {
+            document.getElementById('message').textContent = data.message;
+        });
+    </script>
+</body>
+</html>
