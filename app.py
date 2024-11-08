@@ -2,7 +2,6 @@ from flask import Flask, render_template, jsonify
 from flask_socketio import SocketIO, emit
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from aiogram.utils import executor
 from aiogram.types import CallbackQuery
 import os
 import asyncio
@@ -53,5 +52,5 @@ async def process_failed(callback_query: CallbackQuery):
 
 if __name__ == '__main__':
     from threading import Thread
-    Thread(target=lambda: executor.start_polling(dp, skip_updates=True)).start()
+    Thread(target=lambda: dp.start_polling(dp, skip_updates=True)).start()
     socketio.run(app, host="0.0.0.0", port=5000)
